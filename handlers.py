@@ -11,4 +11,3 @@ def cinema_location(bot, update, user_data):
 
 def chosen_cinema(bot, update, user_data):
     pass
-

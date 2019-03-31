@@ -1,22 +1,34 @@
 import requests
 import json
-import datetime
-import pprint
+from sqlalchemy_declarative import About_cinema, Base, Id_info
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+engine = create_engine('sqlite:///cinema_information.db')
+Base.metadata.bind = engine
+DBsession = sessionmaker()
+DBsession.bind = engine
+session = DBsession()
 
 
+id_of_cinema = session.query(About_cinema).all()
+a = id_of_cinema.cinema_id
 
-raw_id_info = requests.get(f'https://kudago.com/public-api/v1.4/movies/1323/?fields=&expand=')
+for i in a:
+    raw_id_info = requests.get(f'https://kudago.com/public-api/v1.4/movies/{i}/?fields=&expand=')
+    result_of_info_request = raw_id_info.json()
+    raw_id_cinema_info = result_of_info_request['body_text'].replace('<p>', '' ) 
 
-result_of_info_request = raw_id_info.json()
+    id_cinema_description = raw_id_cinema_info.replace('</p>', '' )
+    trailer = result_of_info_request['trailer']
 
-pp = pprint.PrettyPrinter(indent=4)
+    instance = Id_info(description = id_cinema_description , trailer_url = trailer)
+    session.add(instance)
+    session.commit()
 
+
+#import pprint
+#print(id_cinema_info)
+#print(trailer)
+#pp = pprint.PrettyPrinter(indent=4)
 #pp.pprint(result_of_info_request)
-
-raw_id_cinema_info = result_of_info_request['body_text'].replace('<p>', '' ) 
-id_cinema_info = raw_id_cinema_info.replace('</p>', '' )
-
-trailer = result_of_info_request['trailer']
-
-print(id_cinema_info)
-print(trailer)
