@@ -1,3 +1,5 @@
+*.db
+id_info_request.py
 settings.py
 .vscode
 # Byte-compiled / optimized / DLL files
