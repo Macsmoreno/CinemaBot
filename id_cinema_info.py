@@ -1,17 +1,17 @@
 import requests
 import json
-from sqlalchemy_declarative import About_cinema, Base, Id_info
+from sqlalchemy_declarative import Movies, Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('sqlite:///cinema_information.db')
+engine = create_engine('sqlite:///movies.db')
 Base.metadata.bind = engine
 DBsession = sessionmaker()
 DBsession.bind = engine
 session = DBsession()
 
 
-id_of_cinema = session.query(About_cinema).all()
+id_of_cinema = session.query(Movies).all()
 a = id_of_cinema.cinema_id
 
 for i in a:
@@ -22,7 +22,7 @@ for i in a:
     id_cinema_description = raw_id_cinema_info.replace('</p>', '' )
     trailer = movies_info_request['trailer']
 
-    instance = Id_info(description = id_cinema_description , trailer_url = trailer)
+    instance = Movies(description = id_cinema_description , trailer_url = trailer)
     session.add(instance)
     session.commit()
 

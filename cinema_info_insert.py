@@ -13,7 +13,7 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 for j in movies_request['results']:   
-    instance = Movies(title = j['title'], cinema_id = j['id'])
+    instance = Movies(title = j['title'], id = j['id'])
     session.add(instance)
     session.commit()
 
