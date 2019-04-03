@@ -10,9 +10,10 @@ Base = declarative_base()
 
 
 class Movies(Base):
+    __tablename__ = 'Movies'
     title = Column(Text, nullable = False)
     id = Column(Integer, primary_key = True)
-    description = Column(String, nullable = False)
+    description = Column(String, nullable = True)
     trailer_url = Column(String, nullable = True)
 
 

@@ -17,13 +17,3 @@ for j in movies_request['results']:
     session.add(instance)
     session.commit()
 
-for i in movie_id_request:
-    instance = Movies(description = i['body_text'] )
-    session.add(instance)
-    session.commit()
-
-for x in movie_id_request:
-    instance = Movies(trailer_url = x['trailer'])
-    session.add(instance)
-    session.commit()
-
