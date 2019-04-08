@@ -1,7 +1,7 @@
 import logging
-from handlers import *
+from handlers import cinema_list, cinema_location, chosen_cinema
 from utils import greet_user
-from cinema_list_request import cinema_info
+
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, RegexHandler,  Filters
 
@@ -18,7 +18,6 @@ def main():
     logging.info('Бот запускается')
     
     dp = mybot.dispatcher
-    dp.add_handler(CommandHandler("id фильма", cinema_info, pass_user_data=True))
     dp.add_handler(CommandHandler("start", greet_user, pass_user_data=True))
     dp.add_handler(RegexHandler('^(Сейчас в кино)$', cinema_list, pass_user_data=True))
     dp.add_handler(RegexHandler('^(Кинотеатры)$', cinema_location, pass_user_data=True))
