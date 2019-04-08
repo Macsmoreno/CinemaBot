@@ -1,4 +1,5 @@
 *.db
+query_example.py
 id_info_request.py
 settings.py
 .vscode
