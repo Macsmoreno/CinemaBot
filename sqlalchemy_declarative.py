@@ -16,6 +16,7 @@ class Movies(Base):
     id_of_movie = Column(Integer, primary_key = True)
     description = Column(String, nullable = False)
     trailer_url = Column(String, nullable = False)
+    publication = Column(Integer, primary_key = True)
 
 
 engine = create_engine('sqlite:///movies.db')
