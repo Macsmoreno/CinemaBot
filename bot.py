@@ -1,9 +1,8 @@
 import logging
-from handlers import cinema_list, cinema_location, chosen_cinema, cinema_get_id
-from utils import greet_user
+from handlers import greet_user, cinema_list, cinema_location, chosen_cinema, inline_button_pressed
 
-
-from telegram.ext import Updater, CommandHandler, MessageHandler, RegexHandler, ConversationHandler, Filters
+from telegram.ext import Updater, CommandHandler,  MessageHandler, RegexHandler, ConversationHandler, Filters, \
+    CallbackQueryHandler
 
 import settings
 
@@ -15,12 +14,11 @@ logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
 def main():
     mybot = Updater(settings.API_KEY, request_kwargs=settings.PROXY)
     
-    logging.info('Бот запускается')
+    logging.info('Бот активирован')
     
     cinema_now = ConversationHandler(
-        entry_points = [RegexHandler('^(Сейчас в кино)$', cinema_list, pass_user_data=True)],
+        entry_points = [],
         states = {
-            "id":[CommandHandler("id", cinema_get_id, pass_user_data=True)],
         },
         fallbacks = []
     )
@@ -28,9 +26,10 @@ def main():
     
     dp = mybot.dispatcher
     dp.add_handler(CommandHandler("start", greet_user, pass_user_data=True))
+    dp.add_handler(RegexHandler('^(Сейчас в кино)$', cinema_list, pass_user_data=True))
+    dp.add_handler(CallbackQueryHandler(inline_button_pressed))
     dp.add_handler(cinema_now)
     dp.add_handler(RegexHandler('^(Кинотеатры)$', cinema_location, pass_user_data=True))
-    dp.add_handler(RegexHandler('^(Избранное)$', chosen_cinema, pass_user_data=True))
     
     
     
