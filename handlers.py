@@ -1,9 +1,9 @@
 from telegram import MessageEntity, ReplyKeyboardMarkup, \
     ReplyKeyboardRemove, InlineKeyboardMarkup, InlineKeyboardButton, ParseMode, error
+from utils import get_keyboard
 
 import logging
 
-from query_example import movie_list
 
 from sqlalchemy_declarative import Movies, Base
 from sqlalchemy import create_engine, desc
@@ -20,7 +20,7 @@ session = DBSession()
 def greet_user(bot, update, user_data):
     text = 'Привет, {}!'.format(update.message.chat.first_name)
     logging.info(text)
-    update.message.reply_text(text)
+    update.message.reply_text(text, reply_markup = get_keyboard())
 
 
 def cinema_list(bot, update, user_data):
