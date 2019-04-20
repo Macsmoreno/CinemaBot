@@ -26,3 +26,5 @@ def result(movie_id):
 for movie in movies_request['results']:
         movie_id = movie['id']
         movie_info = result(movie_id)
+
+movies_place = requests.get(f'https://kudago.com/public-api/v1.4/movies/{movie_id}/showings/?fields=id,movie,place,datetime,price&order_by=price&location=kzn&actual_since={start_date}')
