@@ -32,14 +32,15 @@ def movies_places_id(movie_id):
         '''показывает где идет кино по id'''
         movies_places_request = requests.get(f'https://kudago.com/public-api/v1.4/movies/{movie_id}/showings/?fields=id,title,movie,place,datetime,price&location=kzn&actual_since={start_date}')
         movies_places = movies_places_request.json()
+        info_list = []
         for info in movies_places['results']: 
-                [
+               info_list.append([
                 info['datetime'],
                 info['movie']['id'],
                 info['place']['id'],
                 info['price']
-                ]
-        return info
+                ])
+        return info_list
 
 ''' список кинотеатров '''
 places_request = requests.get("https://kudago.com/public-api/v1.4/places/?fields=id,title,address,foreign_url&order_by=address&text_format=text&location=kzn&categories=cinema")
