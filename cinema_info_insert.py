@@ -15,7 +15,7 @@ session = DBSession()
 for movie in movies_request['results']: 
     movie_id = movie['id']
     movie_info = result(movie_id)
-    instance_result = Movies(id = movie['id'], id_of_movie = movie_info[0], 
+    instance_result = Movies(id_of_movie = movie_info[0], 
                     title = movie_info[1], description = movie_info[2], trailer_url = movie_info[3],
                     publication = movie_info[4] )
     session.add(instance_result)
@@ -24,10 +24,11 @@ for movie in movies_request['results']:
 for movie in movies_request['results']: 
     movie_id = movie['id']
     movie_places_info = movies_places_id(movie_id)
-    instance_places_id = Movies_schedule(id_movie_in_schedule = movie_places_info['movie']['id'] , 
-                                            datetime_of_movie = movie_places_info['datetime'],
-                                            place_id_in_schedule = movie_places_info['place']['id'], 
-                                            price = movie_places_info['price'] )
+    for new_info in movie_places_info:
+        instance_places_id = Movies_schedule(id_movie_in_schedule = new_info[1] , 
+                                                datetime_of_movie = new_info[0],
+                                                place_id_in_schedule = new_info[2], 
+                                                price = new_info[3] )
     session.add(instance_places_id)
     session.commit()
 
